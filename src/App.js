@@ -3,11 +3,11 @@ import "./App.css";
 import yusufImg from "./img/Yusuf.png";
 import malekImg from "./img/Malek.png";
 import aidenImg from "./img/Aiden.png";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+// import html2canvas from "html2canvas";
+// import jsPDF from "jspdf";
 
 function App() {
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+//   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   // Animasi fade-in ketika komponen dimuat
   useEffect(() => {
@@ -31,48 +31,48 @@ function App() {
   };
 
   // Fungsi untuk export ke PDF
-  const exportToPDF = async () => {
-    setIsGeneratingPDF(true);
-    try {
-      const element = document.querySelector(".container");
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-        backgroundColor: "#f5fef5",
-      });
+//   const exportToPDF = async () => {
+//     setIsGeneratingPDF(true);
+//     try {
+//       const element = document.querySelector(".container");
+//       const canvas = await html2canvas(element, {
+//         scale: 2,
+//         useCORS: true,
+//         logging: false,
+//         backgroundColor: "#f5fef5",
+//       });
 
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4",
-      });
+//       const imgData = canvas.toDataURL("image/png");
+//       const pdf = new jsPDF({
+//         orientation: "portrait",
+//         unit: "mm",
+//         format: "a4",
+//       });
 
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+//       const imgWidth = 210; // A4 width in mm
+//       const pageHeight = 297; // A4 height in mm
+//       const imgHeight = (canvas.height * imgWidth) / canvas.width;
+//       let heightLeft = imgHeight;
+//       let position = 0;
 
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+//       pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+//       heightLeft -= pageHeight;
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+//       while (heightLeft >= 0) {
+//         position = heightLeft - imgHeight;
+//         pdf.addPage();
+//         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+//         heightLeft -= pageHeight;
+//       }
 
-      pdf.save("Jemputan-Majlis-Akikah.pdf");
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-      alert("Maaf, terdapat masalah semasa menjana PDF. Sila cuba lagi.");
-    } finally {
-      setIsGeneratingPDF(false);
-    }
-  };
+//       pdf.save("Jemputan-Majlis-Akikah.pdf");
+//     } catch (error) {
+//       console.error("Error generating PDF:", error);
+//       alert("Maaf, terdapat masalah semasa menjana PDF. Sila cuba lagi.");
+//     } finally {
+//       setIsGeneratingPDF(false);
+//     }
+//   };
 
   return (
     <div className="app">
@@ -116,7 +116,7 @@ function App() {
                 <img src={yusufImg} alt="Yusuf" className="child-image" />
               </div>
               <div className="child-name">Yusuf</div>
-              <div className="child-parents">Putera kepada Firdaus & Suha</div>
+              <div className="child-parents">Putera kepada Firdaus & Syuhadah</div>
             </div>
 
             <div className="child-card">
@@ -132,7 +132,7 @@ function App() {
                 <img src={malekImg} alt="Malek" className="child-image" />
               </div>
               <div className="child-name">MALEEQ</div>
-              <div className="child-parents">Putera kepada Naim & Umirah</div>
+              <div className="child-parents">Putera kepada Ammar & Umirah</div>
             </div>
           </div>
         </section>
@@ -174,10 +174,10 @@ function App() {
           <div className="program">
             <h3 className="program-title">Atur Cara Ringkas</h3>
             <ul className="program-list">
-              <li>11:00 AM - Ketibaan Tetamu</li>
-              <li>12:00 PM - Jamuan Makan</li>
-              <li>1:00 PM - Bacaan Yassin & Doa</li>
-              <li>2:30 PM - Sesi Bergambar & Perpisahan</li>
+              <li>10:00 AM - Ketibaan Tetamu</li>
+              <li>10:30 AM - Marhaban & Cukur Jambul & Doa </li>
+              <li>11:00 AM - Makan </li>
+              <li>3:00 PM - Tamat</li>
             </ul>
           </div>
         </section>
@@ -223,14 +223,14 @@ function App() {
             Kongsi Jemputan di WhatsApp
           </button>
 
-          <button
+          {/* <button
             className="pdf-button"
             onClick={exportToPDF}
             disabled={isGeneratingPDF}
           >
             <span className="pdf-icon">📄</span>
             {isGeneratingPDF ? "Menjana PDF..." : "Muat Turun sebagai PDF"}
-          </button>
+          </button> */}
         </div>
 
         {/* Footer */}
