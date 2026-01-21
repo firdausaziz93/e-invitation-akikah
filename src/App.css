@@ -8,13 +8,16 @@
 }
 
 :root {
-  /* Color Palette - Islamik & Elegant */
-  --primary-green: #2d6a4f;
-  --light-green: #52b788;
-  --cream: #fff8e7;
-  --beige: #f5e6d3;
+  /* Color Palette - Purple Islamic & Floral */
+  --primary-purple: #6b2c91;
+  --light-purple: #9b59b6;
+  --dark-purple: #4a1a66;
+  --lavender: #e8d5f2;
+  --rose-purple: #d4a5d8;
+  --cream: #fff8f5;
+  --beige: #f5e6f0;
   --gold: #d4af37;
-  --dark-brown: #3e2723;
+  --rose-gold: #e8a87c;
   --white: #ffffff;
   --text-dark: #2c2c2c;
   --text-light: #666666;
@@ -36,9 +39,9 @@
   --radius-lg: 20px;
   
   /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 2px 8px rgba(107, 44, 145, 0.15);
+  --shadow-md: 0 4px 16px rgba(107, 44, 145, 0.2);
+  --shadow-lg: 0 8px 24px rgba(107, 44, 145, 0.25);
 }
 
 body {
@@ -48,27 +51,53 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: 
-    linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(200,230,200,0.5) 100%),
+    linear-gradient(135deg, rgba(232, 213, 242, 0.4) 0%, rgba(212, 165, 216, 0.3) 100%),
+    radial-gradient(circle at 20% 30%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(107, 44, 145, 0.06) 0%, transparent 50%),
     repeating-linear-gradient(
-      60deg,
+      45deg,
       transparent,
-      transparent 40px,
-      rgba(143, 188, 143, 0.05) 40px,
-      rgba(143, 188, 143, 0.05) 80px
+      transparent 50px,
+      rgba(155, 89, 182, 0.03) 50px,
+      rgba(155, 89, 182, 0.03) 100px
     ),
     repeating-linear-gradient(
-      -60deg,
+      -45deg,
       transparent,
-      transparent 40px,
-      rgba(184, 134, 11, 0.03) 40px,
-      rgba(184, 134, 11, 0.03) 80px
+      transparent 50px,
+      rgba(212, 175, 55, 0.02) 50px,
+      rgba(212, 175, 55, 0.02) 100px
     ),
-    radial-gradient(circle at 15% 50%, rgba(218, 165, 32, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 85% 80%, rgba(143, 188, 143, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 40%),
-    linear-gradient(to bottom, #f5fef5 0%, #e5f5e5 100%);
+    linear-gradient(to bottom, #fdf8fd 0%, #f5e6f0 100%);
   background-attachment: fixed;
   background-size: cover;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '🌺 🌸 🌼 🌺 🌸';
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 2.5rem;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+  animation: floatFlowers 20s ease-in-out infinite;
+}
+
+@keyframes floatFlowers {
+  0%, 100% { 
+    transform: translateY(0) scale(1);
+    opacity: 0.15;
+  }
+  50% { 
+    transform: translateY(-20px) scale(1.1);
+    opacity: 0.25;
+  }
 }
 
 
@@ -89,15 +118,21 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.06;
+  opacity: 0.08;
   z-index: 0;
   background-image: 
-    repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(45, 106, 79, 0.4) 50px, rgba(45, 106, 79, 0.4) 51px),
-    repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(45, 106, 79, 0.4) 50px, rgba(45, 106, 79, 0.4) 51px),
+    repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(107, 44, 145, 0.4) 50px, rgba(107, 44, 145, 0.4) 51px),
+    repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(107, 44, 145, 0.4) 50px, rgba(107, 44, 145, 0.4) 51px),
     radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 100% 100%, rgba(212, 175, 55, 0.3) 0%, transparent 50%);
+    radial-gradient(circle at 100% 100%, rgba(155, 89, 182, 0.3) 0%, transparent 50%);
   background-size: 50px 50px, 50px 50px, 400px 400px, 400px 400px;
   pointer-events: none;
+  animation: patternShift 30s ease-in-out infinite;
+}
+
+@keyframes patternShift {
+  0%, 100% { opacity: 0.08; }
+  50% { opacity: 0.12; }
 }
 
 .container {
@@ -129,47 +164,66 @@ body {
    ============================================ */
 .header {
   background: 
-    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(245,254,245,0.95)),
+    linear-gradient(135deg, rgba(253, 248, 253, 0.98), rgba(232, 213, 242, 0.95)),
     repeating-linear-gradient(
       45deg,
       transparent,
       transparent 30px,
-      rgba(143, 188, 143, 0.05) 30px,
-      rgba(143, 188, 143, 0.05) 31px
+      rgba(155, 89, 182, 0.06) 30px,
+      rgba(155, 89, 182, 0.06) 31px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 30px,
+      rgba(212, 175, 55, 0.04) 30px,
+      rgba(212, 175, 55, 0.04) 31px
     );
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl) var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
   box-shadow: 
     var(--shadow-md),
-    0 0 30px rgba(143, 188, 143, 0.15),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+    0 0 30px rgba(155, 89, 182, 0.2),
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    inset 0 -2px 15px rgba(155, 89, 182, 0.05);
   text-align: center;
-  border-top: 4px solid var(--gold);
-  border-bottom: 2px solid rgba(143, 188, 143, 0.3);
+  border-top: 5px solid var(--light-purple);
+  border-bottom: 3px solid var(--rose-gold);
   position: relative;
   overflow: hidden;
 }
 
 .header::before {
-  content: '☪';
+  content: '🌺';
   position: absolute;
   top: 15px;
   left: 25px;
-  font-size: 2rem;
-  color: rgba(184, 134, 11, 0.2);
-  animation: glow 3s ease-in-out infinite;
+  font-size: 2.5rem;
+  animation: flowerSpin 8s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(155, 89, 182, 0.3));
 }
 
 .header::after {
-  content: '☪';
+  content: '🌺';
   position: absolute;
   top: 15px;
   right: 25px;
-  font-size: 2rem;
-  color: rgba(184, 134, 11, 0.2);
-  animation: glow 3s ease-in-out infinite;
-  animation-delay: 1.5s;
+  font-size: 2.5rem;
+  animation: flowerSpin 8s ease-in-out infinite reverse;
+  filter: drop-shadow(0 2px 4px rgba(155, 89, 182, 0.3));
+  animation-delay: 1s;
+}
+
+@keyframes flowerSpin {
+  0%, 100% { 
+    transform: rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: rotate(180deg) scale(1.2);
+    opacity: 0.9;
+  }
 }
 
 @keyframes glow {
@@ -190,7 +244,7 @@ body {
 .bismillah .arabic {
   font-family: var(--font-arabic);
   font-size: 1.8rem;
-  color: var(--primary-green);
+  color: var(--primary-purple);
   font-weight: 700;
   margin-bottom: var(--spacing-xs);
   line-height: 1.8;
@@ -203,18 +257,36 @@ body {
 }
 
 .divider {
-  width: 80px;
-  height: 3px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(to right, transparent, var(--light-purple), var(--rose-gold), var(--light-purple), transparent);
   margin: var(--spacing-md) auto;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(155, 89, 182, 0.3);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.8; transform: scaleX(1); }
+  50% { opacity: 1; transform: scaleX(1.05); }
 }
 
 .main-title {
-  font-size: 2.2rem;
-  color: var(--primary-green);
-  font-weight: 600;
+  font-size: 2.4rem;
+  background: linear-gradient(135deg, var(--primary-purple), var(--light-purple), var(--rose-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
   margin-bottom: var(--spacing-md);
   letter-spacing: 1px;
+  text-shadow: 0 2px 10px rgba(155, 89, 182, 0.3);
+  animation: titleGlow 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
 }
 
 .welcome-text {
@@ -228,7 +300,7 @@ body {
 }
 
 .welcome-text em {
-  color: var(--primary-green);
+  color: var(--primary-purple);
   font-weight: 500;
 }
 
@@ -242,10 +314,32 @@ body {
 
 .section-title {
   text-align: center;
-  font-size: 1.8rem;
-  color: var(--primary-green);
+  font-size: 2rem;
+  background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: var(--spacing-md);
-  font-weight: 600;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(155, 89, 182, 0.2);
+  position: relative;
+}
+
+.section-title::before {
+  content: '🌼';
+  position: absolute;
+  left: calc(50% - 100px);
+  opacity: 0.5;
+  animation: gentleSway 3s ease-in-out infinite;
+}
+
+.section-title::after {
+  content: '🌼';
+  position: absolute;
+  right: calc(50% - 100px);
+  opacity: 0.5;
+  animation: gentleSway 3s ease-in-out infinite;
+  animation-delay: 1.5s;
 }
 
 .children-cards {
@@ -256,25 +350,32 @@ body {
 
 .child-card {
   background: 
-    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(245,254,245,0.95)),
+    linear-gradient(135deg, rgba(253, 248, 253, 0.98), rgba(232, 213, 242, 0.95)),
     repeating-linear-gradient(
       45deg,
       transparent,
       transparent 25px,
-      rgba(82, 183, 136, 0.05) 25px,
-      rgba(82, 183, 136, 0.05) 26px
+      rgba(155, 89, 182, 0.05) 25px,
+      rgba(155, 89, 182, 0.05) 26px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 25px,
+      rgba(212, 165, 216, 0.04) 25px,
+      rgba(212, 165, 216, 0.04) 26px
     );
   border-radius: 50% 50% var(--radius-md) var(--radius-md);
   padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
   text-align: center;
   box-shadow: 
-    var(--shadow-sm),
-    0 2px 12px rgba(82, 183, 136, 0.15),
-    inset 0 -3px 8px rgba(143, 188, 143, 0.1);
-  border-left: 3px solid var(--light-green);
-  border-right: 3px solid var(--light-green);
-  border-bottom: 4px solid var(--gold);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    var(--shadow-md),
+    0 4px 15px rgba(155, 89, 182, 0.2),
+    inset 0 -3px 10px rgba(155, 89, 182, 0.08);
+  border-left: 3px solid var(--light-purple);
+  border-right: 3px solid var(--light-purple);
+  border-bottom: 5px solid var(--rose-gold);
+  transition: all 0.4s ease;
   position: relative;
   overflow: visible;
 }
@@ -282,50 +383,69 @@ body {
 .child-card::before {
   content: '';
   position: absolute;
-  top: -5px;
+  top: -8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--gold), #e8c468);
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--light-purple), var(--rose-purple));
   border-radius: 50% 50% 0 0;
   box-shadow: 
-    0 -2px 8px rgba(212, 175, 55, 0.3),
-    inset 0 2px 4px rgba(255, 255, 255, 0.5);
+    0 -3px 10px rgba(155, 89, 182, 0.4),
+    inset 0 3px 6px rgba(255, 255, 255, 0.5);
+  animation: domePulse 3s ease-in-out infinite;
+}
+
+@keyframes domePulse {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
 }
 
 .child-card::after {
-  content: '☪';
+  content: '🌺';
   position: absolute;
-  top: 0;
+  top: 2px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.5rem;
-  color: var(--white);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(155, 89, 182, 0.4));
+  animation: flowerBounce 2s ease-in-out infinite;
   z-index: 1;
 }
 
+@keyframes flowerBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+  50% { transform: translateX(-50%) translateY(-5px) rotate(10deg); }
+}
+
 .child-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-10px) scale(1.03);
   box-shadow: 
     var(--shadow-lg),
-    0 8px 25px rgba(82, 183, 136, 0.25),
-    inset 0 -3px 12px rgba(143, 188, 143, 0.15);
+    0 10px 30px rgba(155, 89, 182, 0.3),
+    inset 0 -3px 15px rgba(155, 89, 182, 0.12);
+  border-bottom-color: var(--light-purple);
 }
 
 .child-image-wrapper {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   margin: var(--spacing-md) auto var(--spacing-sm);
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid var(--gold);
+  border: 5px solid transparent;
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, var(--light-purple), var(--rose-purple), var(--rose-gold)) border-box;
   box-shadow: 
-    0 4px 12px rgba(212, 175, 55, 0.3),
-    inset 0 2px 6px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, var(--cream), var(--white));
+    0 4px 15px rgba(155, 89, 182, 0.3),
+    inset 0 2px 8px rgba(155, 89, 182, 0.1);
   position: relative;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% { box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3), inset 0 2px 8px rgba(155, 89, 182, 0.1); }
+  50% { box-shadow: 0 6px 20px rgba(155, 89, 182, 0.5), inset 0 2px 10px rgba(155, 89, 182, 0.15); }
 }
 
 .child-image {
@@ -342,7 +462,7 @@ body {
 
 .child-name {
   font-size: 2rem;
-  color: var(--primary-green);
+  color: var(--primary-purple);
   font-weight: 700;
   margin-bottom: var(--spacing-sm);
   margin-top: var(--spacing-xs);
@@ -367,28 +487,28 @@ body {
       0deg,
       transparent,
       transparent 30px,
-      rgba(143, 188, 143, 0.06) 30px,
-      rgba(143, 188, 143, 0.06) 31px
+      rgba(107, 44, 145, 0.06) 30px,
+      rgba(107, 44, 145, 0.06) 31px
     ),
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 30px,
-      rgba(143, 188, 143, 0.06) 30px,
-      rgba(143, 188, 143, 0.06) 31px
+      rgba(107, 44, 145, 0.06) 30px,
+      rgba(107, 44, 145, 0.06) 31px
     );
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl) var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
   box-shadow: 
     var(--shadow-md),
-    0 4px 20px rgba(143, 188, 143, 0.12),
+    0 4px 20px rgba(107, 44, 145, 0.12),
     inset 0 1px 0 rgba(255,255,255,0.9),
-    inset 0 0 60px rgba(143, 188, 143, 0.03);
+    inset 0 0 60px rgba(107, 44, 145, 0.03);
   border-top: 4px solid var(--gold);
   border-bottom: 4px solid var(--gold);
-  border-left: 2px solid rgba(143, 188, 143, 0.2);
-  border-right: 2px solid rgba(143, 188, 143, 0.2);
+  border-left: 2px solid rgba(107, 44, 145, 0.2);
+  border-right: 2px solid rgba(107, 44, 145, 0.2);
   position: relative;
 }
 
@@ -456,7 +576,7 @@ body {
   border: 3px solid var(--gold);
   border-top: 4px solid var(--gold);
   box-shadow: 
-    0 4px 12px rgba(143, 188, 143, 0.15),
+    0 4px 12px rgba(107, 44, 145, 0.15),
     inset 0 2px 8px rgba(212, 175, 55, 0.1),
     0 -2px 0 rgba(212, 175, 55, 0.3);
   position: relative;
@@ -476,21 +596,20 @@ body {
   transform: translateX(-50%);
   width: 35px;
   height: 35px;
-  /* background: linear-gradient(135deg, var(--light-green), var(--primary-green)); */
-  /* border-radius: 50% 50% 0 0;
+  background: linear-gradient(135deg, var(--light-purple), var(--primary-purple));
+  border-radius: 50% 50% 0 0;
   box-shadow: 
-    0 -2px 6px rgba(82, 183, 136, 0.3),
-    inset 0 1px 3px rgba(255, 255, 255, 0.4); */
+    0 -2px 6px rgba(107, 44, 145, 0.3),
+    inset 0 1px 3px rgba(255, 255, 255, 0.4);
 }
 
 .detail-item::after {
-  /* content: '☪'; */
+  content: '🌼';
   position: absolute;
   top: -3px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.2rem;
-  color: var(--white);
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -498,7 +617,7 @@ body {
 .detail-item:hover {
   transform: translateY(-5px);
   box-shadow: 
-    0 8px 20px rgba(143, 188, 143, 0.25),
+    0 8px 20px rgba(107, 44, 145, 0.25),
     inset 0 2px 12px rgba(212, 175, 55, 0.15),
     0 -2px 0 rgba(212, 175, 55, 0.4);
 }
@@ -522,7 +641,7 @@ body {
 
 .detail-value {
   font-size: 0.95rem;
-  color: var(--primary-green);
+  color: var(--primary-purple);
   font-weight: 600;
   line-height: 1.7;
   text-shadow: 0 1px 2px rgba(45, 106, 79, 0.1);
@@ -531,14 +650,14 @@ body {
 }
 
 .location-link {
-  color: var(--primary-green);
+  color: var(--primary-purple);
   text-decoration: none;
   font-weight: 700;
   display: inline-block;
   padding: var(--spacing-xs) var(--spacing-sm);
   background: linear-gradient(135deg, rgba(82, 183, 136, 0.15), rgba(45, 106, 79, 0.1));
   border-radius: var(--radius-sm);
-  border: 2px solid var(--light-green);
+  border: 2px solid var(--light-purple);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -549,9 +668,9 @@ body {
 }
 
 .location-link:hover {
-  background: linear-gradient(135deg, var(--light-green), var(--primary-green));
+  background: linear-gradient(135deg, var(--light-purple), var(--primary-purple));
   color: var(--white);
-  border-color: var(--primary-green);
+  border-color: var(--primary-purple);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
 }
@@ -568,7 +687,7 @@ body {
 
 .program-title {
   font-size: 1.3rem;
-  color: var(--primary-green);
+  color: var(--primary-purple);
   margin-bottom: var(--spacing-md);
 }
 .program-list li {
@@ -587,16 +706,23 @@ body {
   border-left: 3px solid var(--gold);
   font-size: 0.95rem;
   color: var(--text-dark);
-  box-shadow: 0 1px 4px rgba(143, 188, 143, 0.08);
+  box-shadow: 0 1px 4px rgba(107, 44, 145, 0.08);
 }
 .program-list li {
   padding: var(--spacing-sm);
   margin-bottom: var(--spacing-xs);
   background: var(--cream);
   border-radius: var(--radius-sm);
-  border-left: 3px solid var(--gold);
+  border-left: 3px solid var(--primary-purple);
   font-size: 0.95rem;
   color: var(--text-dark);
+  transition: all 0.3s ease;
+}
+
+.program-list li:hover {
+  transform: translateX(5px);
+  border-left-color: var(--light-purple);
+  box-shadow: 0 2px 8px rgba(107, 44, 145, 0.15);
 }
 
 
@@ -604,7 +730,7 @@ body {
    CLOSING SECTION - Doa & Penutup
    ============================================ */
 .closing-section {
-  background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+  background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl) var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
@@ -678,7 +804,7 @@ body {
 }
 
 .whatsapp-button {
-  background: linear-gradient(135deg, #25D366, #128C7E);
+  background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
   color: var(--white);
   border: none;
   border-radius: 50px;
@@ -687,7 +813,7 @@ body {
   font-weight: 600;
   font-family: var(--font-body);
   cursor: pointer;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 15px rgba(107, 44, 145, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: inline-flex;
   align-items: center;
@@ -697,7 +823,7 @@ body {
 
 .whatsapp-button:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 6px 20px rgba(107, 44, 145, 0.5);
 }
 
 .whatsapp-button:active {
@@ -765,7 +891,7 @@ body {
 
 .footer-text {
   font-size: 1rem;
-  color: var(--primary-green);
+  color: var(--primary-purple);
   margin-bottom: var(--spacing-sm);
   font-weight: 500;
 }

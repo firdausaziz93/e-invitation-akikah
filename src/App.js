@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "./App.css";
+import "./FloatingFlowers.css";
 import yusufImg from "./img/Yusuf.png";
 import malekImg from "./img/Malek.png";
 import aidenImg from "./img/Aiden.png";
@@ -17,6 +18,37 @@ function App() {
         el.classList.add("visible");
       }, index * 200);
     });
+  }, []);
+
+  // Floating flowers animation
+  useEffect(() => {
+    const flowers = ['\ud83c\udf38', '\ud83c\udf3a', '\ud83c\udf3c', '\ud83c\udf37', '\ud83c\udf39'];
+    const createFloatingFlower = () => {
+      const flower = document.createElement('div');
+      flower.className = 'floating-flower';
+      flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+      flower.style.left = `${Math.random() * 100}%`;
+      flower.style.animationDuration = `${15 + Math.random() * 10}s`;
+      flower.style.animationDelay = `${Math.random() * 5}s`;
+      
+      document.querySelector('.app').appendChild(flower);
+      
+      setTimeout(() => {
+        if (flower.parentNode) {
+          flower.remove();
+        }
+      }, 25000);
+    };
+    
+    // Create initial flowers
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => createFloatingFlower(), i * 2000);
+    }
+    
+    // Create new flowers periodically
+    const interval = setInterval(createFloatingFlower, 5000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   // Fungsi untuk share ke WhatsApp
@@ -174,8 +206,8 @@ function App() {
           <div className="program">
             <h3 className="program-title">Atur Cara Ringkas</h3>
             <ul className="program-list">
-              <li>10:00 AM - Ketibaan Tetamu</li>
-              <li>10:30 AM - Marhaban & Cukur Jambul & Doa </li>
+              <li>10:00 AM - Marhaban</li>
+              <li>11:00 AM - Doa, Tahlil & Cukur Jambul </li>
               <li>11:00 AM - Makan </li>
               <li>3:00 PM - Tamat</li>
             </ul>
