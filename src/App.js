@@ -131,13 +131,20 @@ function App() {
 
   // Fungsi untuk buka invitation
   const handleOpen = useCallback(() => {
+    // Prevent multiple clicks
+    if (isOpened) return;
+    
     // Mark as interacted immediately for mobile
     setUserInteracted(true);
     
     // Try to play music immediately on button click (mobile requirement)
     if (playerRef.current && playerRef.current.playVideo) {
-      playerRef.current.playVideo();
-      setIsPlaying(true);
+      try {
+        playerRef.current.playVideo();
+        setIsPlaying(true);
+      } catch (error) {
+        console.log('Error playing video:', error);
+      }
     }
     
     // Trigger closing animation
@@ -150,11 +157,15 @@ function App() {
     setTimeout(() => {
       setIsOpened(true);
       // Try again after animation in case first attempt failed
-      if (playerRef.current && playerRef.current.playVideo && !isPlaying) {
-        playerRef.current.playVideo();
+      if (playerRef.current && playerRef.current.playVideo) {
+        try {
+          playerRef.current.playVideo();
+        } catch (error) {
+          console.log('Retry play error:', error);
+        }
       }
     }, 1000); // Match with animation duration
-  }, [isPlaying]);
+  }, [isOpened]);
 
   // Fungsi untuk share ke WhatsApp
   const shareToWhatsApp = () => {
