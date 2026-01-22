@@ -66,25 +66,8 @@ function App() {
     });
   }, []);
 
-  // Auto-play music on first user interaction
-  useEffect(() => {
-    const handleFirstInteraction = () => {
-      if (!userInteracted && playerRef.current && playerRef.current.playVideo) {
-        playerRef.current.playVideo();
-        setUserInteracted(true);
-      }
-    };
-
-    document.addEventListener("click", handleFirstInteraction);
-    document.addEventListener("touchstart", handleFirstInteraction);
-    document.addEventListener("scroll", handleFirstInteraction);
-
-    return () => {
-      document.removeEventListener("click", handleFirstInteraction);
-      document.removeEventListener("touchstart", handleFirstInteraction);
-      document.removeEventListener("scroll", handleFirstInteraction);
-    };
-  }, [userInteracted]);
+  // Note: Removed auto-play listener to prevent Safari conflicts
+  // Music will only play when user clicks "BUKA JEMPUTAN" button
 
   // Floating flowers animation
   useEffect(() => {
@@ -146,13 +129,20 @@ function App() {
     // Mark as interacted immediately for mobile
     setUserInteracted(true);
 
-    // Try to play music immediately on button click (mobile requirement)
+    // Trigger closing animation
+    const overlay = document.querySelector(".opening-overlay");
+    if (overlay) {
+      overlay.classList.add("closing");
+    }
+
+    // Safari-specific: Play music in same event loop (synchronous)
     if (playerRef.current && playerRef.current.playVideo) {
       try {
         // Ensure unmuted and volume is set
         if (playerRef.current.unMute) playerRef.current.unMute();
         if (playerRef.current.setVolume) playerRef.current.setVolume(100);
 
+        // Play immediately - Safari requires this to be synchronous with user action
         playerRef.current.playVideo();
         setIsPlaying(true);
         console.log("Attempting to play music");
@@ -163,27 +153,10 @@ function App() {
       console.log("Player not ready yet");
     }
 
-    // Trigger closing animation
-    const overlay = document.querySelector(".opening-overlay");
-    if (overlay) {
-      overlay.classList.add("closing");
-    }
-
     // Remove overlay after animation
     setTimeout(() => {
       setIsOpened(true);
-      // Try again after animation in case first attempt failed
-    //   if (playerRef.current && playerRef.current.playVideo) {
-    //     try {
-    //       if (playerRef.current.unMute) playerRef.current.unMute();
-    //       if (playerRef.current.setVolume) playerRef.current.setVolume(100);
-    //       playerRef.current.playVideo();
-    //       console.log("Retry playing music");
-    //     } catch (error) {
-    //       console.log("Retry play error:", error);
-    //     }
-    //   }
-    }, 5000); // Match with animation duration
+    }, 1000); // Match with animation duration
   }, [isOpened]);
 
   // Fungsi untuk share ke WhatsApp
