@@ -173,17 +173,17 @@ function App() {
     setTimeout(() => {
       setIsOpened(true);
       // Try again after animation in case first attempt failed
-      if (playerRef.current && playerRef.current.playVideo) {
-        try {
-          if (playerRef.current.unMute) playerRef.current.unMute();
-          if (playerRef.current.setVolume) playerRef.current.setVolume(100);
-          playerRef.current.playVideo();
-          console.log("Retry playing music");
-        } catch (error) {
-          console.log("Retry play error:", error);
-        }
-      }
-    }, 1000); // Match with animation duration
+    //   if (playerRef.current && playerRef.current.playVideo) {
+    //     try {
+    //       if (playerRef.current.unMute) playerRef.current.unMute();
+    //       if (playerRef.current.setVolume) playerRef.current.setVolume(100);
+    //       playerRef.current.playVideo();
+    //       console.log("Retry playing music");
+    //     } catch (error) {
+    //       console.log("Retry play error:", error);
+    //     }
+    //   }
+    }, 5000); // Match with animation duration
   }, [isOpened]);
 
   // Fungsi untuk share ke WhatsApp
