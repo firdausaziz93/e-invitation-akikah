@@ -124,15 +124,19 @@ function App() {
   }, []);
 
   // Fungsi untuk toggle music
-  const toggleMusic = () => {
+  const toggleMusic = useCallback(() => {
     if (playerRef.current && playerRef.current.playVideo) {
-      // Ensure unmuted before playing
-      if (playerRef.current.unMute) playerRef.current.unMute();
-      if (playerRef.current.setVolume) playerRef.current.setVolume(100);
-      playerRef.current.playVideo();
-      if (!userInteracted) setUserInteracted(true);
+      if (isPlaying) {
+        playerRef.current.pauseVideo();
+      } else {
+        // Ensure unmuted before playing
+        if (playerRef.current.unMute) playerRef.current.unMute();
+        if (playerRef.current.setVolume) playerRef.current.setVolume(100);
+        playerRef.current.playVideo();
+        if (!userInteracted) setUserInteracted(true);
+      }
     }
-  };
+  }, [isPlaying, userInteracted]);
 
   // Fungsi untuk buka invitation
   const handleOpen = useCallback(() => {
