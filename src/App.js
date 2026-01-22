@@ -131,21 +131,30 @@ function App() {
 
   // Fungsi untuk buka invitation
   const handleOpen = useCallback(() => {
+    // Mark as interacted immediately for mobile
+    setUserInteracted(true);
+    
+    // Try to play music immediately on button click (mobile requirement)
+    if (playerRef.current && playerRef.current.playVideo) {
+      playerRef.current.playVideo();
+      setIsPlaying(true);
+    }
+    
     // Trigger closing animation
     const overlay = document.querySelector('.opening-overlay');
     if (overlay) {
       overlay.classList.add('closing');
     }
     
-    // Remove overlay after animation and play music
+    // Remove overlay after animation
     setTimeout(() => {
       setIsOpened(true);
-      if (playerRef.current && playerRef.current.playVideo) {
+      // Try again after animation in case first attempt failed
+      if (playerRef.current && playerRef.current.playVideo && !isPlaying) {
         playerRef.current.playVideo();
-        setUserInteracted(true);
       }
     }, 1000); // Match with animation duration
-  }, []);
+  }, [isPlaying]);
 
   // Fungsi untuk share ke WhatsApp
   const shareToWhatsApp = () => {
@@ -292,7 +301,7 @@ function App() {
               <div className="child-image-wrapper">
                 <img src={malekImg} alt="Malek" className="child-image" />
               </div>
-              <div className="child-name">MALEEQ</div>
+              <div className="child-name">Maleeq</div>
               <div className="child-parents">Putera kepada Ammar & Umirah</div>
             </div>
           </div>
@@ -339,7 +348,7 @@ function App() {
             <ul className="program-list">
               <li>10:00 AM - Marhaban</li>
               <li>11:00 AM - Doa, Tahlil & Cukur Jambul </li>
-              <li>11:00 AM - Makan </li>
+              <li>12:30 AM - Makan </li>
               <li>3:00 PM - Tamat</li>
             </ul>
           </div>
