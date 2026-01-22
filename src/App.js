@@ -310,7 +310,7 @@ function App() {
 
           <div className="details-grid">
             <div className="detail-item">
-              <div className="detail-icon">📅</div>
+              <div className="detail-icon">🗓️</div>
               <div className="detail-label">Tarikh</div>
               <div className="detail-value">Ahad, 15 Februari 2026</div>
             </div>

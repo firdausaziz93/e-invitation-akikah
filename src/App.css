@@ -1,10 +1,23 @@
 /* ============================================
+   FONT FACE
+   ============================================ */
+@font-face {
+  font-family: 'Mujahideen';
+  src: url('./font/mujahideen.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
    BASIC RESET & VARIABLES
    ============================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Mujahideen', 'Poppins', sans-serif;
+  font-size: 1.05em;
 }
 
 :root {
@@ -24,7 +37,7 @@
   
   /* Typography */
   --font-arabic: 'Amiri', serif;
-  --font-body: 'Poppins', sans-serif;
+  --font-body: 'Mujahideen', 'Poppins', sans-serif;
   
   /* Spacing */
   --spacing-xs: 0.5rem;
@@ -1013,36 +1026,80 @@ body::before {
   text-shadow: 0 1px 2px rgba(45, 106, 79, 0.1);
   word-break: break-word;
   padding: 0 var(--spacing-xs);
+  font-family: 'Poppins', sans-serif;
 }
 
 .location-link {
-  color: var(--primary-purple);
+  color: var(--white);
   text-decoration: none;
-  font-weight: 700;
-  display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background: linear-gradient(135deg, rgba(82, 183, 136, 0.15), rgba(45, 106, 79, 0.1));
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--light-purple);
-  transition: all 0.3s ease;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--primary-purple) 0%, var(--light-purple) 100%);
+  border-radius: 50px;
+  border: 2px solid var(--gold);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 
+    0 4px 15px rgba(128, 0, 32, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+  font-size: 0.95rem;
 }
 
 .location-link::before {
-  margin-right: var(--spacing-xs);
+  content: '📍';
+  font-size: 1.2rem;
+  animation: pinBounce 2s ease-in-out infinite;
+}
+
+.location-link::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
 }
 
 .location-link:hover {
-  background: linear-gradient(135deg, var(--light-purple), var(--primary-purple));
-  color: var(--white);
-  border-color: var(--primary-purple);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
+  background: linear-gradient(135deg, var(--light-purple) 0%, var(--primary-purple) 100%);
+  border-color: var(--rose-gold);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 8px 25px rgba(128, 0, 32, 0.4),
+    0 0 20px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.location-link:hover::after {
+  width: 300px;
+  height: 300px;
 }
 
 .location-link:active {
-  transform: translateY(0);
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 
+    0 4px 15px rgba(128, 0, 32, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes pinBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 .program {
@@ -1083,6 +1140,7 @@ body::before {
   font-size: 0.95rem;
   color: var(--text-dark);
   transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
 }
 
 .program-list li:hover {
@@ -1134,12 +1192,14 @@ body::before {
   text-align: center;
   font-size: 0.85rem;
   opacity: 0.8;
+  font-family: 'Poppins', sans-serif;
 }
 
 .closing-text {
   text-align: center;
   margin-bottom: var(--spacing-lg);
   line-height: 1.8;
+  font-size: 0.95em;
 }
 
 .closing-text p {
