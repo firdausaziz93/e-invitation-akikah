@@ -40,15 +40,15 @@ function App() {
             // Unmute and set volume when ready
             event.target.unMute();
             event.target.setVolume(100);
-            console.log('Player ready');
+            console.log("Player ready");
           },
           onStateChange: (event) => {
             if (event.data === window.YT.PlayerState.PLAYING) {
               setIsPlaying(true);
-              console.log('Music playing');
+              console.log("Music playing");
             } else if (event.data === window.YT.PlayerState.PAUSED) {
               setIsPlaying(false);
-              console.log('Music paused');
+              console.log("Music paused");
             }
           },
         },
@@ -75,14 +75,14 @@ function App() {
       }
     };
 
-    document.addEventListener('click', handleFirstInteraction);
-    document.addEventListener('touchstart', handleFirstInteraction);
-    document.addEventListener('scroll', handleFirstInteraction);
+    document.addEventListener("click", handleFirstInteraction);
+    document.addEventListener("touchstart", handleFirstInteraction);
+    document.addEventListener("scroll", handleFirstInteraction);
 
     return () => {
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
-      document.removeEventListener('scroll', handleFirstInteraction);
+      document.removeEventListener("click", handleFirstInteraction);
+      document.removeEventListener("touchstart", handleFirstInteraction);
+      document.removeEventListener("scroll", handleFirstInteraction);
     };
   }, [userInteracted]);
 
@@ -124,51 +124,47 @@ function App() {
   }, []);
 
   // Fungsi untuk toggle music
-  const toggleMusic = useCallback(() => {
+  const toggleMusic = () => {
     if (playerRef.current && playerRef.current.playVideo) {
-      if (isPlaying) {
-        playerRef.current.pauseVideo();
-      } else {
-        // Ensure unmuted before playing
-        if (playerRef.current.unMute) playerRef.current.unMute();
-        if (playerRef.current.setVolume) playerRef.current.setVolume(100);
-        playerRef.current.playVideo();
-        if (!userInteracted) setUserInteracted(true);
-      }
+      // Ensure unmuted before playing
+      if (playerRef.current.unMute) playerRef.current.unMute();
+      if (playerRef.current.setVolume) playerRef.current.setVolume(100);
+      playerRef.current.playVideo();
+      if (!userInteracted) setUserInteracted(true);
     }
-  }, [isPlaying, userInteracted]);
+  };
 
   // Fungsi untuk buka invitation
   const handleOpen = useCallback(() => {
     // Prevent multiple clicks
     if (isOpened) return;
-    
+
     // Mark as interacted immediately for mobile
     setUserInteracted(true);
-    
+
     // Try to play music immediately on button click (mobile requirement)
     if (playerRef.current && playerRef.current.playVideo) {
       try {
         // Ensure unmuted and volume is set
         if (playerRef.current.unMute) playerRef.current.unMute();
         if (playerRef.current.setVolume) playerRef.current.setVolume(100);
-        
+
         playerRef.current.playVideo();
         setIsPlaying(true);
-        console.log('Attempting to play music');
+        console.log("Attempting to play music");
       } catch (error) {
-        console.log('Error playing video:', error);
+        console.log("Error playing video:", error);
       }
     } else {
-      console.log('Player not ready yet');
+      console.log("Player not ready yet");
     }
-    
+
     // Trigger closing animation
-    const overlay = document.querySelector('.opening-overlay');
+    const overlay = document.querySelector(".opening-overlay");
     if (overlay) {
-      overlay.classList.add('closing');
+      overlay.classList.add("closing");
     }
-    
+
     // Remove overlay after animation
     setTimeout(() => {
       setIsOpened(true);
@@ -178,9 +174,9 @@ function App() {
           if (playerRef.current.unMute) playerRef.current.unMute();
           if (playerRef.current.setVolume) playerRef.current.setVolume(100);
           playerRef.current.playVideo();
-          console.log('Retry playing music');
+          console.log("Retry playing music");
         } catch (error) {
-          console.log('Retry play error:', error);
+          console.log("Retry play error:", error);
         }
       }
     }, 1000); // Match with animation duration
@@ -266,15 +262,21 @@ function App() {
       {/* Music Player */}
       <div className="music-player">
         <button className="music-toggle" onClick={toggleMusic}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             {isPlaying ? (
-              <path d="M6 4H8V20H6V4ZM16 4H18V20H16V4Z" fill="currentColor"/>
+              <path d="M6 4H8V20H6V4ZM16 4H18V20H16V4Z" fill="currentColor" />
             ) : (
-              <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+              <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
             )}
           </svg>
         </button>
-        <div id="youtube-player" style={{ display: 'none' }}></div>
+        <div id="youtube-player" style={{ display: "none" }}></div>
       </div>
 
       {/* Main Container */}
