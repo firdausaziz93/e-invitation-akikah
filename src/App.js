@@ -33,16 +33,22 @@ function App() {
           loop: 1,
           playlist: "DeweCI6MxYY",
           controls: 0,
+          enablejsapi: 1,
         },
         events: {
           onReady: (event) => {
-            // Ready to play
+            // Unmute and set volume when ready
+            event.target.unMute();
+            event.target.setVolume(100);
+            console.log('Player ready');
           },
           onStateChange: (event) => {
             if (event.data === window.YT.PlayerState.PLAYING) {
               setIsPlaying(true);
+              console.log('Music playing');
             } else if (event.data === window.YT.PlayerState.PAUSED) {
               setIsPlaying(false);
+              console.log('Music paused');
             }
           },
         },
@@ -123,6 +129,9 @@ function App() {
       if (isPlaying) {
         playerRef.current.pauseVideo();
       } else {
+        // Ensure unmuted before playing
+        if (playerRef.current.unMute) playerRef.current.unMute();
+        if (playerRef.current.setVolume) playerRef.current.setVolume(100);
         playerRef.current.playVideo();
         if (!userInteracted) setUserInteracted(true);
       }
@@ -140,11 +149,18 @@ function App() {
     // Try to play music immediately on button click (mobile requirement)
     if (playerRef.current && playerRef.current.playVideo) {
       try {
+        // Ensure unmuted and volume is set
+        if (playerRef.current.unMute) playerRef.current.unMute();
+        if (playerRef.current.setVolume) playerRef.current.setVolume(100);
+        
         playerRef.current.playVideo();
         setIsPlaying(true);
+        console.log('Attempting to play music');
       } catch (error) {
         console.log('Error playing video:', error);
       }
+    } else {
+      console.log('Player not ready yet');
     }
     
     // Trigger closing animation
@@ -159,7 +175,10 @@ function App() {
       // Try again after animation in case first attempt failed
       if (playerRef.current && playerRef.current.playVideo) {
         try {
+          if (playerRef.current.unMute) playerRef.current.unMute();
+          if (playerRef.current.setVolume) playerRef.current.setVolume(100);
           playerRef.current.playVideo();
+          console.log('Retry playing music');
         } catch (error) {
           console.log('Retry play error:', error);
         }
