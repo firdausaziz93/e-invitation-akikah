@@ -216,7 +216,7 @@ function App() {
               <div className="window-decoration-bottom"></div>
             </div>
             <button className="open-button" onClick={handleOpen}>
-              <span className="open-text">BUKA JEMPUTAN</span>
+              <span className="open-text">BUKA</span>
             </button>
           </div>
         </div>
