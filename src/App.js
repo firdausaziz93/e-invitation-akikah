@@ -13,6 +13,7 @@ function App() {
   const [userInteracted, setUserInteracted] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const playerRef = useRef(null);
+  const playInitiatedRef = useRef(false);
 
   // Load YouTube IFrame API
   useEffect(() => {
@@ -47,8 +48,18 @@ function App() {
               setIsPlaying(true);
               console.log("Music playing");
             } else if (event.data === window.YT.PlayerState.PAUSED) {
-              setIsPlaying(false);
-              console.log("Music paused");
+              // If user initiated play, prevent auto-pause by replaying
+              if (playInitiatedRef.current) {
+                console.log("Auto-pause detected, forcing play");
+                setTimeout(() => {
+                  if (playerRef.current && playerRef.current.playVideo) {
+                    playerRef.current.playVideo();
+                  }
+                }, 100);
+              } else {
+                setIsPlaying(false);
+                console.log("Music paused");
+              }
             }
           },
         },
@@ -110,8 +121,10 @@ function App() {
   const toggleMusic = useCallback(() => {
     if (playerRef.current && playerRef.current.playVideo) {
       if (isPlaying) {
+        playInitiatedRef.current = false; // Allow pause
         playerRef.current.pauseVideo();
       } else {
+        playInitiatedRef.current = true; // Prevent auto-pause
         // Ensure unmuted before playing
         if (playerRef.current.unMute) playerRef.current.unMute();
         if (playerRef.current.setVolume) playerRef.current.setVolume(100);
@@ -128,6 +141,7 @@ function App() {
 
     // Mark as interacted immediately for mobile
     setUserInteracted(true);
+    playInitiatedRef.current = true; // Flag to prevent auto-pause
 
     // Trigger closing animation
     const overlay = document.querySelector(".opening-overlay");
