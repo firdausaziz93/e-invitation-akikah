@@ -4,66 +4,47 @@ import "./FloatingFlowers.css";
 import yusufImg from "./img/Yusuf.png";
 import malekImg from "./img/Malek.png";
 import aidenImg from "./img/Aiden.png";
-// import html2canvas from "html2canvas";
-// import jsPDF from "jspdf";
+import backgroundMusic from "./audio/SELAWAT cut version.mp3";
 
 function App() {
-  //   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
-  const playerRef = useRef(null);
+  const audioRef = useRef(null);
   const playInitiatedRef = useRef(false);
 
-  // Load YouTube IFrame API
+  // Initialize HTML5 Audio
   useEffect(() => {
-    // Load YouTube IFrame API script
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    audioRef.current = new Audio(backgroundMusic);
+    audioRef.current.loop = true;
+    audioRef.current.volume = 1.0;
 
-    // Initialize player when API is ready
-    window.onYouTubeIframeAPIReady = () => {
-      playerRef.current = new window.YT.Player("youtube-player", {
-        height: "0",
-        width: "0",
-        videoId: "DeweCI6MxYY",
-        playerVars: {
-          autoplay: 0,
-          loop: 1,
-          playlist: "DeweCI6MxYY",
-          controls: 0,
-          enablejsapi: 1,
-        },
-        events: {
-          onReady: (event) => {
-            // Unmute and set volume when ready
-            event.target.unMute();
-            event.target.setVolume(100);
-            console.log("Player ready");
-          },
-          onStateChange: (event) => {
-            if (event.data === window.YT.PlayerState.PLAYING) {
-              setIsPlaying(true);
-              console.log("Music playing");
-            } else if (event.data === window.YT.PlayerState.PAUSED) {
-              // If user initiated play, prevent auto-pause by replaying
-              if (playInitiatedRef.current) {
-                console.log("Auto-pause detected, forcing play");
-                setTimeout(() => {
-                  if (playerRef.current && playerRef.current.playVideo) {
-                    playerRef.current.playVideo();
-                  }
-                }, 100);
-              } else {
-                setIsPlaying(false);
-                console.log("Music paused");
-              }
-            }
-          },
-        },
-      });
+    audioRef.current.addEventListener("play", () => {
+      setIsPlaying(true);
+      console.log("Music playing");
+    });
+
+    audioRef.current.addEventListener("pause", () => {
+      if (playInitiatedRef.current) {
+        console.log("Auto-pause detected, forcing play");
+        setTimeout(() => {
+          if (audioRef.current) {
+            audioRef.current
+              .play()
+              .catch((e) => console.log("Replay error:", e));
+          }
+        }, 100);
+      } else {
+        setIsPlaying(false);
+        console.log("Music paused");
+      }
+    });
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
     };
   }, []);
 
@@ -119,16 +100,13 @@ function App() {
 
   // Fungsi untuk toggle music
   const toggleMusic = useCallback(() => {
-    if (playerRef.current && playerRef.current.playVideo) {
+    if (audioRef.current) {
       if (isPlaying) {
-        playInitiatedRef.current = false; // Allow pause
-        playerRef.current.pauseVideo();
+        playInitiatedRef.current = false;
+        audioRef.current.pause();
       } else {
-        playInitiatedRef.current = true; // Prevent auto-pause
-        // Ensure unmuted before playing
-        if (playerRef.current.unMute) playerRef.current.unMute();
-        if (playerRef.current.setVolume) playerRef.current.setVolume(100);
-        playerRef.current.playVideo();
+        playInitiatedRef.current = true;
+        audioRef.current.play().catch((e) => console.log("Play error:", e));
         if (!userInteracted) setUserInteracted(true);
       }
     }
@@ -141,7 +119,7 @@ function App() {
 
     // Mark as interacted immediately for mobile
     setUserInteracted(true);
-    playInitiatedRef.current = true; // Flag to prevent auto-pause
+    playInitiatedRef.current = true;
 
     // Trigger closing animation
     const overlay = document.querySelector(".opening-overlay");
@@ -149,28 +127,25 @@ function App() {
       overlay.classList.add("closing");
     }
 
-    // Safari-specific: Play music in same event loop (synchronous)
-    if (playerRef.current && playerRef.current.playVideo) {
-      try {
-        // Ensure unmuted and volume is set
-        if (playerRef.current.unMute) playerRef.current.unMute();
-        if (playerRef.current.setVolume) playerRef.current.setVolume(100);
-
-        // Play immediately - Safari requires this to be synchronous with user action
-        playerRef.current.playVideo();
-        setIsPlaying(true);
-        console.log("Attempting to play music");
-      } catch (error) {
-        console.log("Error playing video:", error);
-      }
+    // Play music
+    if (audioRef.current) {
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          console.log("Music started successfully");
+        })
+        .catch((error) => {
+          console.log("Audio play error:", error);
+        });
     } else {
-      console.log("Player not ready yet");
+      console.log("Audio not ready yet");
     }
 
     // Remove overlay after animation
     setTimeout(() => {
       setIsOpened(true);
-    }, 1000); // Match with animation duration
+    }, 1000);
   }, [isOpened]);
 
   // Fungsi untuk share ke WhatsApp
@@ -267,7 +242,6 @@ function App() {
             )}
           </svg>
         </button>
-        <div id="youtube-player" style={{ display: "none" }}></div>
       </div>
 
       {/* Main Container */}
