@@ -215,15 +215,30 @@ function App() {
       {/* Opening Window Animation */}
       {!isOpened && (
         <div className="opening-overlay">
+          <div className="window-backdrop"></div>
           <div className="kampung-window">
+            <div className="window-inner-backdrop"></div>
             <div className="window-frame">
-              <div className="window-left"></div>
-              <div className="window-right"></div>
+              {/* Bismillah text above doors */}
+              <div className="bismillah-header">
+                <span className="bismillah-text">بِسۡـــــــــمِ ٱللهِ ٱلرَّحۡـمَـٰنِ ٱلرَّحِـــــــيمِ</span>
+              </div>
+              <div className="window-left">
+                <div className="door-pattern"></div>
+                <div className="door-geometric"></div>
+              </div>
+              <div className="window-right">
+                <div className="door-pattern"></div>
+                <div className="door-geometric"></div>
+              </div>
               <div className="window-decoration-top"></div>
               <div className="window-decoration-bottom"></div>
             </div>
             <button className="open-button" onClick={handleOpen}>
+              <span className="button-glow"></span>
+              <span className="button-border"></span>
               <span className="open-text">BUKA</span>
+              <span className="button-shimmer"></span>
             </button>
           </div>
         </div>
