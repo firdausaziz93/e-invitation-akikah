@@ -1,10 +1,13 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import "./App.css";
-import "./FloatingFlowers.css";
 import yusufImg from "./img/Yusuf.png";
 import malekImg from "./img/Malek.png";
 import aidenImg from "./img/Aiden.png";
 import backgroundMusic from "./audio/SELAWAT cut version.mp3";
+import butterflyGif from "./img/butterfly-green.gif";
+import butterflyInsect from "./img/butterfly-insect.gif";
+import butterflyOrange from "./img/butterfly-orange.gif";
+import butterflyCcc from "./img/ccc.gif";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -90,43 +93,6 @@ function App() {
   // Note: Removed auto-play listener to prevent Safari conflicts
   // Music will only play when user clicks "BUKA JEMPUTAN" button
 
-  // Floating flowers animation
-  useEffect(() => {
-    const flowers = [
-      "\ud83c\udf38",
-      "\ud83c\udf3a",
-      "\ud83c\udf3c",
-      "\ud83c\udf37",
-      "\ud83c\udf39",
-    ];
-    const createFloatingFlower = () => {
-      const flower = document.createElement("div");
-      flower.className = "floating-flower";
-      flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
-      flower.style.left = `${Math.random() * 100}%`;
-      flower.style.animationDuration = `${15 + Math.random() * 10}s`;
-      flower.style.animationDelay = `${Math.random() * 5}s`;
-
-      document.querySelector(".app").appendChild(flower);
-
-      setTimeout(() => {
-        if (flower.parentNode) {
-          flower.remove();
-        }
-      }, 25000);
-    };
-
-    // Create initial flowers
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => createFloatingFlower(), i * 2000);
-    }
-
-    // Create new flowers periodically
-    const interval = setInterval(createFloatingFlower, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   // Fungsi untuk toggle music
   const toggleMusic = useCallback(() => {
     if (audioRef.current) {
@@ -180,9 +146,21 @@ function App() {
   // Fungsi untuk share ke WhatsApp
   const shareToWhatsApp = () => {
     const message = encodeURIComponent(
-      "Assalamualaikum! Anda dijemput ke Majlis Akikah anak-anak kami.\n\n" +
-        "Sila klik pautan ini untuk maklumat lanjut:\n" +
-        window.location.href,
+      "JEMPUTAN MAJLIS AKIKAH\n\n" +
+        "Assalamualaikum..\n" +
+        "بِسۡـــــــــمِ ٱللهِ ٱلرَّحۡـمَـٰنِ ٱلرَّحِـــــــيمِ\n\n" +
+        "AZIZ BIN MAMAT & SITI ZAHARAH BINTI SAID\n\n" +
+        "dengan setulus ikhlas untuk menjemput Ahli Keluarga / Saudara Mara / Jiran Tetangga / Sahabat Handai Serta Rakan - Rakan ke Majlis Akikah bagi anak - anak kami:\n\n" +
+        "1. YUSUF (Putera kepada FIRDAUS & SYUHADAH)\n" +
+        "2. AYDEEN (Putera kepada ISMAIL & ATIRAH)\n" +
+        "3. MALEEQ (Putera kepada AMMAR & UMIRAH)\n\n" +
+        "Tarikh: Ahad, 15 Februari 2026\n" +
+        "Masa: 11:00 Pagi - 3:00 Petang\n" +
+        "Lokasi: Kampung Parit Buluh, Air Kuning Selatan\n\n" +
+        "Kami berharap Ahli Keluarga / Saudara Mara / Jiran Tetangga / Sahabat Handai Serta Rakan - Rakan sekeluarga dapat meluangkan masa untuk hadir memeriahkan majlis kami ini.\n\n" +
+        "Wassalamualaikum warahmatullahi wabarakatuh\n\n" +
+        "tekan link dibawah untuk membuka ekad :\n" +
+        "https://e-invitation-akikah.vercel.app/\n"
     );
     const whatsappUrl = `https://wa.me/?text=${message}`;
     window.open(whatsappUrl, "_blank");
@@ -254,6 +232,48 @@ function App() {
       {/* Background Pattern */}
       <div className="background-pattern"></div>
 
+      {/* Flying Butterfly GIFs */}
+      <img
+        src={butterflyGif}
+        alt="Flying Butterfly"
+        className="flying-butterfly-gif butterfly-1"
+      />
+      <img
+        src={butterflyInsect}
+        alt="Flying Butterfly"
+        className="flying-butterfly-gif butterfly-2"
+      />
+      <img
+        src={butterflyOrange}
+        alt="Flying Butterfly"
+        className="flying-butterfly-gif butterfly-3"
+      />
+      <img
+        src={butterflyCcc}
+        alt="Flying Butterfly"
+        className="flying-butterfly-gif butterfly-4"
+      />
+      <img
+        src={butterflyGif}
+        alt="Flying Butterfly"
+        className="flying-butterfly-gif butterfly-5"
+      />
+      <img
+        src={butterflyInsect}
+        alt="Flying Butterfly"
+        className="flying-butterfly-gif butterfly-6"
+      />
+      <img
+        src={butterflyOrange}
+        alt="Flying Butterfly"
+        className="flying-butterfly-gif butterfly-7"
+      />
+      <img
+        src={butterflyCcc}
+        alt="Flying Butterfly"
+        className="flying-butterfly-gif butterfly-8"
+      />
+
       {/* Music Player */}
       <div className="music-player">
         <button className="music-toggle" onClick={toggleMusic}>
@@ -294,8 +314,8 @@ function App() {
             </p>
             <p>
               Alhamdulillah, dengan penuh rasa kesyukuran ke hadrat Allah SWT,
-              kami dengan sukacitanya menjemput Dato'/Datin/Tuan/Puan sekeluarga
-              ke majlis kesyukuran sempena kelahiran cahaya mata kami.
+              kami dengan sukacitanya menjemput Ahli Keluarga / Saudara Mara / Jiran Tetangga / Sahabat Handai Serta Rakan - Rakan sekeluarga
+              ke majlis akikah dan kesyukuran sempena kelahiran cahaya mata kami.
             </p>
           </div>
         </header>
