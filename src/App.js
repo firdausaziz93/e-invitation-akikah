@@ -58,6 +58,35 @@ function App() {
     });
   }, []);
 
+  // Auto pause audio when user leaves the browser/tab
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // User left the tab/minimized browser
+        if (audioRef.current && isPlaying) {
+          playInitiatedRef.current = false;
+          audioRef.current.pause();
+          console.log("Audio paused - user left tab");
+        }
+      } else {
+        // User returned to the tab
+        if (audioRef.current && userInteracted && !isPlaying) {
+          playInitiatedRef.current = true;
+          audioRef.current
+            .play()
+            .catch((e) => console.log("Resume play error:", e));
+          console.log("Audio resumed - user returned to tab");
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [isPlaying, userInteracted]);
+
   // Note: Removed auto-play listener to prevent Safari conflicts
   // Music will only play when user clicks "BUKA JEMPUTAN" button
 
@@ -312,13 +341,19 @@ function App() {
             <div className="detail-item">
               <div className="detail-icon">🗓️</div>
               <div className="detail-label">Tarikh</div>
-              <div className="detail-value">Ahad, 15 Februari 2026</div>
+              <div className="detail-value">
+                <span className="marhaban-text">Ahad,</span> 15{" "}
+                <span className="marhaban-text">Februari</span> 2026
+              </div>
             </div>
 
             <div className="detail-item">
               <div className="detail-icon">🕐</div>
               <div className="detail-label">Masa</div>
-              <div className="detail-value">11:00 Pagi - 3:00 Petang</div>
+              <div className="detail-value">
+                11:00 <span className="marhaban-text">Pagi</span> - 3:00{" "}
+                <span className="marhaban-text">Petang</span>
+              </div>
             </div>
 
             <div className="detail-item">
@@ -343,10 +378,21 @@ function App() {
           <div className="program">
             <h3 className="program-title">Atur Cara Ringkas</h3>
             <ul className="program-list">
-              <li>10:00 AM - Marhaban</li>
-              <li>11:00 AM - Doa, Tahlil & Cukur Jambul </li>
-              <li>12:30 AM - Makan </li>
-              <li>3:00 PM - Tamat</li>
+              <li>
+                10:00AM - <span className="marhaban-text">Marhaban</span>
+              </li>
+              <li>
+                11:00AM -{" "}
+                <span className="marhaban-text">
+                  Doa, Tahlil & Cukur Jambul{" "}
+                </span>
+              </li>
+              <li>
+                12:30PM - <span className="marhaban-text">Makan </span>
+              </li>
+              <li>
+                3:00PM - <span className="marhaban-text">Tamat</span>
+              </li>
             </ul>
           </div>
         </section>
@@ -362,7 +408,9 @@ function App() {
               "Ya Tuhan kami, anugerahkanlah kepada kami pasangan dan keturunan
               kami sebagai penyejuk hati (kami)"
             </p>
-            <p className="dua-reference">(Surah Al-Furqan, 25:74)</p>
+            <p className="dua-reference">
+              (<span className="marhaban-text">Surah Al-Furqan,</span> 25:74)
+            </p>
           </div>
 
           <div className="closing-text">
