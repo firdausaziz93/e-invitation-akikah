@@ -140,7 +140,7 @@ function App() {
     // Remove overlay after animation
     setTimeout(() => {
       setIsOpened(true);
-    }, 1000);
+    }, 6000);
   }, [isOpened]);
 
   // Fungsi untuk share ke WhatsApp
